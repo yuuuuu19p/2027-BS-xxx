@@ -1,13 +1,24 @@
-# 基线配置（待填写）
-# 示例：
-# mqtt:
-#   broker: 192.168.1.100
-#   port: 1883
-#   topic: env/data
-#   qos: 0
-# node:
-#   count: 2
-#   board: ESP32
-# sensor:
-#   type: temperature, humidity
-#   interval_s: 5
+# Baseline 配置（示例，以实际运行环境为准）
+# Baseline 定义：本地 LLM 直接问答，无检索增强（no-RAG）
+
+model:
+  name: qwen2.5:1.5b-instruct-q4_K_M   # 待定（Ollama 标签格式；INT8 用 q8_0）
+  quantization: INT4                   # INT4 / INT8（GGUF）
+  engine: Ollama                      # 待定：Ollama / llama.cpp
+
+server:
+  url: http://localhost:11434
+  api: /api/generate
+
+inference:
+  temperature: 0.2
+  max_tokens: 512
+  top_p: 0.9
+
+dataset:
+  question_file: ../../data/samples/standard_questions.jsonl
+  size: 50                             # 标准问题集规模（待定 50-100）
+
+metrics:
+  quality: faithfulness, answer_relevancy      # RAGAS（context_relevancy 仅 RAG 实验）
+  resource: gpu_mem_mb, ram_mb, ttft_ms, total_latency_ms, tokens_per_sec

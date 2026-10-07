@@ -1,6 +1,22 @@
-# 基线运行命令（待填写）
-# 示例：
-# 1) 启动 MQTT broker:  mosquitto -c mosquitto.conf
-# 2) 启动 Web 服务:      python server/main.py --config config.yaml
-# 3) 烧录/运行节点:      idf.py -p COM3 flash monitor
-# 4) 运行评测脚本:       python ../evaluation/metrics/calc.py --log ../results/logs/
+# Baseline 复现命令（示例，按实际环境调整）
+
+# 1) 安装 Ollama（一次性）
+#    https://ollama.com/download
+
+# 2) 启动服务（另开终端，或后台运行）
+ollama serve
+
+# 3) 拉取模型（INT4 示例；INT8 用 :q8_0）
+ollama pull qwen2.5:1.5b-instruct-q4_K_M
+
+# 4) 手动试答（快速验证链路）
+ollama run qwen2.5:1.5b-instruct-q4_K_M "图书馆周末开放时间是几点到几点？"
+
+# 5) 批量评测（Python，需 requests + pyyaml）
+python scripts/run_baseline.py --config experiments/baseline/config.yaml `
+    --questions data/samples/standard_questions.jsonl `
+    --output results/logs/baseline_run1.jsonl
+
+# 6) 资源指标记录
+#    显存：nvidia-smi --query-gpu=memory.used --format=csv
+#    内存：任务管理器 / Get-Process
