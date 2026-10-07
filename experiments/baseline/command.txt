@@ -1,0 +1,6 @@
+# 基线运行命令（待填写）
+# 示例：
+# 1) 启动 MQTT broker:  mosquitto -c mosquitto.conf
+# 2) 启动 Web 服务:      python server/main.py --config config.yaml
+# 3) 烧录/运行节点:      idf.py -p COM3 flash monitor
+# 4) 运行评测脚本:       python ../evaluation/metrics/calc.py --log ../results/logs/

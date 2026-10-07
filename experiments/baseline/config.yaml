@@ -1,0 +1,13 @@
+# 基线配置（待填写）
+# 示例：
+# mqtt:
+#   broker: 192.168.1.100
+#   port: 1883
+#   topic: env/data
+#   qos: 0
+# node:
+#   count: 2
+#   board: ESP32
+# sensor:
+#   type: temperature, humidity
+#   interval_s: 5

@@ -44,5 +44,26 @@ thesis/drafts/*.bak
 Thumbs.db
 desktop.ini
 
+# ---- 模型权重 ----
+*.pth
+*.pt
+*.ckpt
+*.safetensors
+
+# ---- 构建产物 / 依赖目录 ----
+build/
+dist/
+node_modules/
+
+# ---- Vivado / FPGA 临时文件 ----
+.Xil/
+*.jou
+*.wdb
+*.backup.jou
+
+# ---- Conda 环境目录 ----
+miniconda3/
+anaconda3/
+
 # ---- 其他 ----
 *.log
