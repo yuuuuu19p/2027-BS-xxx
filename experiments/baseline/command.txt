@@ -1,22 +1,59 @@
-# Baseline 复现命令（示例，按实际环境调整）
+# Baseline 复现命令（2026-10-07 实测可用）
 
-# 1) 安装 Ollama（一次性）
-#    https://ollama.com/download
+## 0) 环境
 
-# 2) 启动服务（另开终端，或后台运行）
-ollama serve
+- Windows + NVIDIA RTX 4060 Laptop GPU（8 GB）
+- Ollama 0.40.0 安装于 `D:\Ollama`（模型目录 `D:\OllamaModels`，环境变量 `OLLAMA_MODELS`）
+- Python 3.13（依赖：`pip install requests pyyaml`）
 
-# 3) 拉取模型（INT4 示例；INT8 用 :q8_0）
-ollama pull qwen2.5:1.5b-instruct-q4_K_M
+## 1) 启动服务
 
-# 4) 手动试答（快速验证链路）
+```
+D:\Ollama\ollama.exe serve
+```
+
+## 2) 模型获取（本机网络无法直接 `ollama pull`，改用 GGUF 导入）
+
+```powershell
+# 2.1 从 ModelScope（国内可达）下载 GGUF
+#     https://modelscope.cn/models/Qwen/Qwen2.5-1.5B-Instruct-GGUF
+#     文件名：qwen2.5-1.5b-instruct-q4_k_m.gguf（约 1.07 GB）
+
+# 2.2 写 Modelfile
+#     FROM D:\qwen2.5-1.5b-instruct-q4_k_m.gguf
+
+# 2.3 导入 Ollama
+ollama create qwen2.5:1.5b-instruct-q4_K_M -f D:\Modelfile
+
+# 若网络可用，等价命令：
+# ollama pull qwen2.5:1.5b-instruct-q4_K_M
+```
+
+## 3) 手动试答（快速验证链路）
+
+```
 ollama run qwen2.5:1.5b-instruct-q4_K_M "图书馆周末开放时间是几点到几点？"
+```
 
-# 5) 批量评测（Python，需 requests + pyyaml）
+## 4) 批量评测（50 题）
+
+```powershell
 python scripts/run_baseline.py --config experiments/baseline/config.yaml `
     --questions data/samples/standard_questions.jsonl `
     --output results/logs/baseline_run1.jsonl
+```
 
-# 6) 资源指标记录
-#    显存：nvidia-smi --query-gpu=memory.used --format=csv
-#    内存：任务管理器 / Get-Process
+## 5) 结果分析
+
+```powershell
+python scripts/analyze_baseline.py results/logs/baseline_run1.jsonl
+```
+
+## 6) 资源指标记录
+
+```powershell
+# 显存峰值（推理期间采样）
+nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits
+# 内存
+Get-Process | Where-Object { $_.ProcessName -like '*ollama*' } | Select ProcessName, WorkingSet64
+```

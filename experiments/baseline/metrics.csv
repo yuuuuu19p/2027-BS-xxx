@@ -1,9 +1,13 @@
 experiment,metric,value,note
-EXP-001,answer_relevancy,待测,RAGAS 指标
+EXP-001,answer_relevancy,待测,RAGAS 指标（需安装 ragas 后统一评测）
 EXP-001,faithfulness,待测,RAGAS 指标（无检索基线）
 EXP-001,context_relevancy,N/A,基线无检索
-EXP-001,gpu_mem_mb,待测,nvidia-smi 峰值
-EXP-001,ram_mb,待测,系统监视峰值
-EXP-001,ttft_ms,待测,首 token 时延
-EXP-001,total_latency_ms,待测,单题总时延
-EXP-001,tokens_per_sec,待测,吞吐
+EXP-001,gpu_mem_mb,3352,nvidia-smi 观察峰值（含桌面占用，模型加载约 1.5 GB）
+EXP-001,ram_mb,57,ollama 主进程常驻（Windows；模型主要驻留显存）
+EXP-001,ttft_ms,211,热启动流式测（冷启动首次请求约 55 s，含模型加载）
+EXP-001,total_latency_ms,3066,50 题平均（中位 3045，min 2231 / max 5480）
+EXP-001,tokens_per_sec,37.4,50 题平均（中位 39.2）
+EXP-001,avg_tokens_per_answer,129,50 题平均生成 token（中位 123）
+EXP-001,questions_total,50,标准问题集 10 类 × 5 题全部完成
+EXP-001,english_refusal_count,0,疑似英文拒答 0/50
+EXP-001,short_answer_count,1,回答 <10 字 1 题（校园报警电话，答"110"）

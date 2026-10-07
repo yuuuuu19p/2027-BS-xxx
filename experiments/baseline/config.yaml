@@ -2,9 +2,9 @@
 # Baseline 定义：本地 LLM 直接问答，无检索增强（no-RAG）
 
 model:
-  name: qwen2.5:1.5b-instruct-q4_K_M   # 待定（Ollama 标签格式；INT8 用 q8_0）
+  name: qwen2.5:1.5b-instruct-q4_K_M   # 已确认（Ollama 标签；INT8 用 q8_0）
   quantization: INT4                   # INT4 / INT8（GGUF）
-  engine: Ollama                      # 待定：Ollama / llama.cpp
+  engine: Ollama                      # 已确认：Ollama 0.40.0（Windows，安装于 D:\Ollama）
 
 server:
   url: http://localhost:11434
@@ -14,10 +14,11 @@ inference:
   temperature: 0.2
   max_tokens: 512
   top_p: 0.9
+  system_prompt: 你是校园服务智能问答助手。请用简洁、准确的中文回答校园相关问题；如果不知道或信息不足，请如实说明，不要编造。
 
 dataset:
   question_file: ../../data/samples/standard_questions.jsonl
-  size: 50                             # 标准问题集规模（待定 50-100）
+  size: 50                             # 已确认：10 类 × 5 题
 
 metrics:
   quality: faithfulness, answer_relevancy      # RAGAS（context_relevancy 仅 RAG 实验）

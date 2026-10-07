@@ -26,11 +26,12 @@ data/processed/
 *.npz
 *.onnx
 
-# ---- 实验结果（checkpoint/日志不入库，表格与图可入库）----
+# ---- 实验结果（checkpoint 不入库；实验日志 jsonl 可入库，临时 *.log 不入库）----
 results/checkpoints/*
-results/logs/*
+*.log
 !results/checkpoints/.gitkeep
 !results/logs/.gitkeep
+!results/logs/*.jsonl
 
 # ---- 论文临时文件 ----
 thesis/drafts/*.bak

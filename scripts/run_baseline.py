@@ -41,11 +41,12 @@ def load_questions(path):
     return questions
 
 
-def ask(model_name, url, prompt, temperature, max_tokens):
+def ask(model_name, url, prompt, temperature, max_tokens, system_prompt=""):
     payload = {
         "model": model_name,
         "prompt": prompt,
         "stream": False,
+        "system": system_prompt,
         "options": {
             "temperature": temperature,
             "num_predict": max_tokens,
@@ -75,6 +76,7 @@ def main():
     url = cfg["server"]["url"].rstrip("/") + cfg["server"]["api"]
     temperature = cfg["inference"]["temperature"]
     max_tokens = cfg["inference"]["max_tokens"]
+    system_prompt = cfg["inference"].get("system_prompt", "")
 
     questions = load_questions(args.questions)
     print(f"共 {len(questions)} 题，模型 {model_name}")
@@ -83,7 +85,7 @@ def main():
         for i, q in enumerate(questions, 1):
             question = q.get("question", "")
             print(f"[{i}/{len(questions)}] {question[:40]}...")
-            data, elapsed = ask(model_name, url, question, temperature, max_tokens)
+            data, elapsed = ask(model_name, url, question, temperature, max_tokens, system_prompt)
             eval_count = data.get("eval_count", 0) or 0
             rec = {
                 "id": q.get("id", i),

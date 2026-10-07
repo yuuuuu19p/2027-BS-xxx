@@ -42,16 +42,20 @@
 
 ## 五、当前进展
 
-- 当前阶段：选题确认 / 框架搭建
-- 最近完成：仓库目录结构与规范模板建立，内容已切换为 RAG 题目
-- 当前问题：文献清单、实验设计、Baseline 待推进
-- 下一步：核验文献（RAGAS 等）→ 填实验设计 → 跑通 Baseline 并出问题分析报告
+- 当前阶段：Baseline 实验完成，进入 RAG 链路搭建
+- 最近完成：
+  - 题目冻结：面向校园服务的边缘端 RAG 智能问答系统设计与实现（`docs/01-topic/topic_confirm.md`）
+  - 文献清单 7 篇（RAG / 量化 / 评测），待核验后转 `verified_references.md`
+  - 实验设计 EXP-001~007（`docs/03-design/experiment_design.md`）
+  - **Baseline 完成**：Ollama 0.40.0 + qwen2.5:1.5b-instruct-q4_K_M，50 题全量评测（avg 3.07 s/题、37.4 tok/s、ttft 211 ms、显存峰值 3.35 GB），问题分析见 `experiments/baseline/baseline_analysis.md`
+- 当前问题：回答存在幻觉（无检索所致）；RAGAS 质量指标待装 ragas 后补跑；知识库语料待采集
+- 下一步：采集校园服务资料建立知识库 → 搭建 RAG 链路（`exp01_rag_link`）→ EXP-005 RAG 前后对比
 
 ## 六、主要实验结果
 
 | Experiment | Result | Status |
 |---|---|---|
-| （待填写） |  |  |
+| EXP-001 Baseline（no-RAG） | 50 题完成；avg 3.07 s/题、37.4 tok/s、ttft 211 ms、显存峰值 3.35 GB；0 英文拒答；幻觉率高（如报警电话答"110"） | ✅ 完成 |
 
 ## 七、仓库目录说明
 
@@ -87,4 +91,9 @@
 
 ## 十、环境与复现
 
-（待填写：Python / LLM 推理框架 / 向量库 / CPU / GPU / OS / 依赖版本等）
+- OS：Windows
+- GPU：NVIDIA GeForce RTX 4060 Laptop GPU（8 GB 显存，CUDA）
+- 推理框架：Ollama 0.40.0（安装于 `D:\Ollama`，模型目录 `D:\OllamaModels`）
+- 模型：qwen2.5:1.5b-instruct-q4_K_M（INT4 / Q4_K_M，GGUF 1.1 GB）
+- Python：3.13（依赖 requests、pyyaml；RAGAS 待装）
+- 复现命令：见 `experiments/baseline/command.txt`
