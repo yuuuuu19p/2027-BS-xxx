@@ -1,0 +1,48 @@
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ipynb_checkpoints/
+
+# ---- 环境与密钥 ----
+.env
+*.local
+*.key
+*.pem
+
+# ---- 数据（保留目录结构，.gitkeep 除外）----
+data/raw/
+data/processed/
+*.db
+*.sqlite
+*.h5
+*.hdf5
+*.pkl
+*.npz
+*.onnx
+
+# ---- 实验结果（checkpoint/日志不入库，表格与图可入库）----
+results/checkpoints/*
+results/logs/*
+!results/checkpoints/.gitkeep
+!results/logs/.gitkeep
+
+# ---- 论文临时文件 ----
+thesis/drafts/*.bak
+~$*.docx
+
+# ---- 系统与 IDE ----
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ---- 其他 ----
+*.log
